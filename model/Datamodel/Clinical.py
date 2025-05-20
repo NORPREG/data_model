@@ -255,27 +255,3 @@ class ClinicalStudy(BaseModel):
 	study_name: str
 	study_contact_person: Optional[str] = None
 #	comment: Optional[str] = None
-
-
-class Course(BaseModel):
-	metadata: Metadata
-	demographics: Optional[Demographics] = None
-	vitals: Optional[Vitals] = None
-	social: Optional[Social] = None
-	stimulantia: Optional[Stimulantia] = None
-	function_status: Optional[List[FunctionStatus]] = None
-	comorbidity: Optional[List[Comorbidity]] = None
-	primary_diagnosis: Optional[PrimaryDiagnosis] = None
-	staging: Optional[List[Staging]] = None
-	metastasis: Optional[Metastasis] = None
-	histology: Optional[List[Histology]] = None
-	genetics: Optional[List[Genetics]] = None
-	previous_cancer: Optional[PreviousCancer] = None
-	treatment_summary: Optional[List[TreatmentSummary]] = None
-	biological_sample: Optional[List[BiologicalSample]] = None
-	biomarker: Optional[List[Biomarker]] = None
-	ctcae: Optional[List[CTCAE]] = None
-	vital_status: Optional[VitalStatus] = None
-	tumor_event: Optional[List[TumorEvent]] = None
-	consent: Optional[Consent] = None
-	clinical_studies: Optional[List[ClinicalStudy]] = None

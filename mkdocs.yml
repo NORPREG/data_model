@@ -1,0 +1,27 @@
+site_name: Norsk proton- og stråleterapiregister datamodell
+nav:
+  - Hjem: index.md
+  - Datamodell:
+      - DICOM-oversikt: Datamodell/DICOM.md
+      - Behandlingsfraksjoner: Datamodell/Fraction.md
+      - Behandlingsplaner: Datamodell/Plan.md
+      - Feltoversikt: Datamodell/Beam.md
+      - Normeringsvolumer: Datamodell/DR.md
+      - Strukturer: Datamodell/DVH.md
+
+plugins:
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          extensions:
+          - griffe_pydantic:
+              schema: true
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: true
