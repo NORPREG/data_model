@@ -195,7 +195,7 @@ class PvkSync(BaseModel):
        ======================================="""
 
     id: int = field_with_meta(title="Radindeks for PvkSync", description="Dannes automatisk ved opprettelse av ny PvkSync")
-    pvk_events: List[PvkEvent] = field_with_meta(title="", description="", default_factory=list)
+    pvk_events: List[PvkEvent] = field_with_meta(title="PvkEvents", description="Tilknyttede PvkEvents for denne PvkSync-instansen", default_factory=list)
     dt_sync: datetime = field_with_meta(title="Sync datetime", description="Tidspunktet for PvkSync API-forespørsel. Benytter tidspunktet som angitt i svaret")
     new_reservations: int = field_with_meta(title="Antall nye reservasjoner", description="Oppsummert fra alle enkeltvise svar")
     new_reservation_removals: int = field_with_meta(title="Antall nye fjernede reservasjoner", description="Oppsummert fra alle enkeltvise svar")
