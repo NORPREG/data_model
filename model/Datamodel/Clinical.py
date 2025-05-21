@@ -3,6 +3,17 @@ from pydantic import BaseModel
 from typing import List, Optional, Literal
 from datetime import date, datetime
 
+from .utils import field_with_meta
+
+education_levels = {
+	0: "Ingen utdanning",
+	1: "Grunnskole",
+	2: "Videregående",
+	3: "Universitet / høyskole < 4 år",
+	4: "Universitet / høyskole >= 4 år",
+	9: "Ukjent"
+}
+
 class Metadata(BaseModel):
 	xml_timestamp: datetime
 	xml_version_major: int = 0
@@ -20,14 +31,10 @@ class Vitals(BaseModel):
 	height_cm: float
 
 class Social(BaseModel):
-	education_level: Literal[
-		"Ingen utdanning",
-		"Grunnskole",
-		"Videregående",
-		"Universitet / høyskole < 4 år",
-		"Universitet / høyskole >= 4 år",
-		"Ukjent"
-	]
+	education_level: Literal[tuple(education_levels.keys())] = \
+		field_with_meta(title="Høyeste fullførte utdanningsnivå",
+		terminology="no.utdanningsnivaa",
+		values=[f"{k}: {v}" for k,v in education_levels.items()])
 
 	martial_status: Literal[
 		"Ugift",

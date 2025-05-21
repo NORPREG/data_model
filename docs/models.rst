@@ -18,3 +18,12 @@ Det foreligger mange parametere som er koblet mot ulike kodeverk som ICD10, SNOM
 .. automodule:: Datamodel.Clinical
     :members:
 
+Modell for kodeliste for koblingsnøkler
+---------------------------------------
+Denne modellen benyttes for å lagre og kryptere direkte personidentifiserbare opplysninger i registeret, samt holde rede på dataflyt med eksterne kilder
+og loggføre reservasjonsstatus.
+
+Deler av denne kodelisten er kryptert. Da benyttes AES, CBC og PKCS#7. Nøkkelen er sikret i produksjonsmiljøet, mens IV er enkodet i tekstfeltet med `iv_b64:cipher_b64`.
+
+.. automodule:: Datamodel.Kodeliste
+    :members:
