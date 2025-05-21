@@ -56,3 +56,4 @@ autodoc_pydantic_model_show_validator_members = False
 autodoc_pydantic_model_hide_reused_validator = True
 autodoc_pydantic_field_show_required = False
 autodoc_pydantic_field_show_default = False
+autodoc_pydantic_model_erdantic_figure = True
