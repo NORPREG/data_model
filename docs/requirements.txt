@@ -1,7 +1,7 @@
-sphinx
-sphinx-autodoc[erdantic]
 pygraphviz
 erdantic
+sphinx
+sphinx-autodoc[erdantic]
 sphinx_rtd_theme
 sphinx-autodoc-typehints
 autodoc_pydantic
