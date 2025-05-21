@@ -15,9 +15,9 @@ def field_with_meta(title, description="", values=list(), dicom=None, unit=None,
 	encrypted_str = encrypted and "**Kryptert datafelt**\n\n" or ""
 	title_str = len(title) and f"**{title}**" or ""
 	if len(description):
-		description_added = f"{title_str}: {description}\n\n" + unit_str + values_str + dicom_str + encrypted_str
+		description_added = f"{title_str}: {description}\n\n" + unit_str + values_str + dicom_str + encrypted_str + terminology_str
 	else:
-		description_added = f"{title_str}\n\n" + unit_str + values_str + dicom_str + encrypted_str
+		description_added = f"{title_str}\n\n" + unit_str + values_str + dicom_str + encrypted_str + terminology_str
 
 
 	if not default_factory:
