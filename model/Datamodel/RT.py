@@ -205,6 +205,8 @@ class DVH(BaseModel):
 	dvh_string: Optional[str] = field_with_meta(title='DVH string [compressed]', 
 		description=\
 		"""Hele DVH-strengen for strukturen, som beregnet fra struktursettet og RT dose. Teknisk: Lagret som en b64-kodet gzippet streng av bitpakkede uint16, hvor 10 000 angir 100 % volum, med statiske 0.1 Gy bins.
+		Ved datautlevering kan DVH-data eksporteres på ønsket format: CSV, Excel, JSON, PNG etc.
+		Se f.eks. det relaterte prosjektet `DVH Toolkit <https://github.com/BergenParticleTherapy/DVHToolkit>`_ for tips til hvordan data kan behandles og NTCP-modelleres.
 		Her følger et kodeeksempel i Python på hvordan dataene pakkes opp og ned fra en liste::
 		
 			def compress_bitpacking_b64_uint16(float_list):
