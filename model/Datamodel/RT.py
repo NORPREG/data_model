@@ -83,7 +83,7 @@ class Fraction(BaseModel):
 	"""Oversikt over hver behandlingsfraksjon
 	   ======================================
 	
-	Som hentet fra RT Record, og samkjørt med NPR-rapporten. For Mosaiq-systemer er det NPR-rapporten som er primærkilden."""
+		Som hentet fra RT Record, og samkjørt med NPR-rapporten. For Mosaiq-systemer er det NPR-rapporten som er primærkilden."""
 
 	# redcap_repeat_instance: str = 'new'
 	# redcap_repeat_instrument: str = "fraction"
@@ -278,7 +278,9 @@ class DR(BaseModel):
 	"""Oversikt over normeringsvolum:
 	   ==============================
 	
-	Oversikt over normeringsvolum, både det primære som brukes som mål på fraksjonsdose og støtte-normeringsvolum"""
+		Oversikt over normeringsvolum, både det primære som brukes som mål på fraksjonsdose og støtte-normeringsvolum
+	
+	"""
 
 	# redcap_repeat_instance: str = 'new'
 	# redcap_repeat_instrument: str = "dosereference"

@@ -36,7 +36,7 @@ class Patient(BaseModel):
     """Pasientobjekt
        =============
     
-    Kan inneholde flere behandlingsforløp. Da benyttes samme pasient, som inneholder pekere mot flere `courses`."""
+        Kan inneholde flere behandlingsforløp. Da benyttes samme pasient, som inneholder pekere mot flere `courses`."""
 
     patient_key: int = field_with_meta(title="Registernøkkel", description="Pseudonymisert nøkkel for pasienten i registeret. Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)")
     dt_added: datetime = field_with_meta(title="Dato lagt til", description="Dato for når pasienten ble lagt inn i registeret. Angis når enten DICOM-datasettet eller EPJ-datasettet ankommer.")
@@ -78,7 +78,7 @@ class Address(BaseModel):
     """Tabell for adresser
        ===================
     
-    Benytt ``dt_added`` for å tolke postnummer, kommunenummer etter da gjeldende standard."""
+        Benytt ``dt_added`` for å tolke postnummer, kommunenummer etter da gjeldende standard."""
 
     id: int = field_with_meta(title="Radindeks for adresse", description="Dannes automatisk ved opprettelse av ny adresse")
     dt_added: datetime = field_with_meta(title="Dato lagt til", description="Dato for når aktuell adresse ble lagt til")
