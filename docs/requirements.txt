@@ -2,3 +2,4 @@ sphinx
 sphinx-autodoc
 sphinx_rtd_theme
 sphinx-autodoc-typehints
+autodoc_pydantic
