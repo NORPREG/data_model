@@ -14,69 +14,94 @@ education_levels = {
 	9: "Ukjent"
 }
 
+ecog_levels = {
+	0: "Asymptomatisk i stand til å utføre enhver normal aktivitet uten begrensning",
+	1: "Symptomatisk, fullt oppegående Ikke i stand til fysisk krevende aktivitet, men oppegående og i stand til å utføre lett arbeid",
+	2: "Symptomatisk, sengeliggende <50 % av våken tid Oppegående og i stand til all egenpleie, men ikke i stand til noe arbeid; oppe og i bevegelse mer enn 50% av våken tid",
+	3: "Symptomatisk, sengeliggende > 50 % av våken tid Bare i stand til begrenset egenpleie, bundet til seng eller stol > 50 % av våken tid",
+	4: "Helt sengeliggende Helt hjelpetrengende; klarer ikke noen egenpleie; helt bundet til seng eller stol",
+	5: "Pasienten er død"
+}
+
+marital_levels = {
+	1: "Ugift",
+	2: "Gift / Registrert partner",
+	3: "Enke / enkemann / gjenlevende partner",
+	4: "Skilt / Separert",
+	9: "Ukjent"
+}
+
+arbeid_levels = {
+	1: "I arbeid",
+	2: "Ikke i arbeid",
+	3: "Alderspensjonist",
+	4: "Under utdanning / studerer",
+	9: "Ukjent"
+}
+
+def parse(d: dict) -> list:
+	return [f"{k}: {v}" for k,v in d.items()]
+
 class Metadata(BaseModel):
 	xml_timestamp: datetime
 	xml_version_major: int = 0
 	xml_version_minor: int = 3
 
 class Demographics(BaseModel):
-	rt_center: str
-	referring_hf: str
-	birth_year: int
-	sex: Literal["mann", "kvinne"]
-	patient_id_fnr: str
+	rt_center: str = field_with_meta(title="", description="")
+	referring_hf: str = field_with_meta(title="", description="")
+	birth_year: int = field_with_meta(title="", description="")
+	sex: Literal["mann", "kvinne"] = field_with_meta(title="", description="", values=["Mann", "Kvinne"])
 
 class Vitals(BaseModel):
-	weight_at_diagnosis_kg: float
-	height_cm: float
+	weight_at_diagnosis_kg: float = field_with_meta(title="", description="")
+	height_cm: float = field_with_meta(title="", description="")
 
 class Social(BaseModel):
 	education_level: Literal[tuple(education_levels.keys())] = \
 		field_with_meta(title="Høyeste fullførte utdanningsnivå",
 		terminology="no.utdanningsnivaa",
-		values=[f"{k}: {v}" for k,v in education_levels.items()])
+		values=parse(education_levels))
 
-	martial_status: Literal[
-		"Ugift",
-		"Gift / Registrert partner",
-		"Enke / enkemann / gjenlevende partner",
-		"Skilt",
-		"Separert",
-		"Ukjent"
-	]
+	martial_status: Literal[tuple(marital_levels.keys())]  = field_with_meta(title="Samlivsstatus", description="Det finnes lokale, myndighetspålagte verdisett eller terminologier som for eksempel SNOMED CT eller lignende", 
+		values=parse(marital_levels), terminology="no.samlivsstatus")
 
 	living_arrangements: Literal[
 		"Ikke i parforhold",
 		"Samboer/lever i parforhold",
 		"Parforhold, lever ikke sammen / særbo",
 		"Ukjent"
-	]
+	]  = field_with_meta(title="", description="")
+
+	arbeidsstatus: Literal[tuple(arbeid_levels.keys())] = \
+		field_with_meta(title="Arbeidsstatus", values=parse(arbeid_levels), terminology="no.arbeidsstatus")
 
 class Stimulantia(BaseModel):
 	smoking_status: Literal[
 		"Aldri røykt",
 		"Røyker",
 		"Tidligere røyker"
-	]
+	]  = field_with_meta(title="", description="")
 
-	pack_years: int
-	month_since_stopping: Optional[int] = None
+	pack_years: int  = field_with_meta(title="", description="")
+	month_since_stopping: Optional[int] = field_with_meta(title="", description="", default=None)
 	non_smoking_tobacco_status: Literal[
 		"Aldri brukt",
 		"Nåværende bruker",
 		"Tidligere bruker"
-	]
+	]  = field_with_meta(title="", description="")
 	
 	# Evaluation.Alkoholanamnese_v1 @ CKM
 	alcohol_abuse: Literal[
 		"Nåværende bruker",
 		"TIdligere bruker",
-		"Aldri brukt"
-	]
+		"Aldri brukt" 
+	]  = field_with_meta(title="", description="")
 
 class FunctionStatus(BaseModel):
-	ecog_grade: Literal[0,1,2,3,4,5]
-	ecog_date: date
+	ecog_grade: Literal[tuple(ecog_levels.keys())]  = field_with_meta(title="ECOG", 
+		description="Funksjonsstatus", values = [f"{k}: {v}" for k,v in ecog_levels.items()])
+	ecog_date: date = field_with_meta(title="Dato for ECOG", description="Dato for pasientbesøk hvor ECOG ble vurdert", unit="YYYY-MM-DD")
 
 class Comorbidity(BaseModel):
 	comorbidity_name: Optional[str] = None
