@@ -29,8 +29,6 @@ class Registry(BaseModel):
         description="Navn på registeret. Ikke alle registerne er formaliserte, så navnene kan unnvike. Formaliserte registre er markert.", 
         values=[f"{k}: {v}" for k,v in registries.items()])
     patients: List['Patient'] = field_with_meta(title="Tilknyttede pasienter", default_factory=list)
-    registry_exports: List['RegistryExport'] = field_with_meta("Tilknyttede eksporter", default_factory=list)
-
 
 class Patient(BaseModel):
     """Pasientobjekt
@@ -44,35 +42,29 @@ class Patient(BaseModel):
     fk_registry_id: int = field_with_meta(title="FK registernøkkel", description="")
     registry: Optional[Registry] = field_with_meta(title="Tilhørende register", description="Hvilket KREST ligger pasienten i? Dersom det er flere, som i behandling ved lokalsykehus, gjelder første.", default=None)
 
-    patient_ids: List['PatientID'] = field_with_meta(title="Pasient ID-er", description="Liste over pasientens tilhørende F / D / H - nummer", default_factory=list)
     addresses: List['Address'] = field_with_meta(title="Adresser", description="Pasientens tilhørende adresser", default_factory=list)
     courses: List['Course'] = field_with_meta(title="Behandlingsforløp", description="Pasientens tilhørende behandlingsforløp. Knyttet til Course ID i OIS og sak i DIPS.", default_factory=list)
-    patient_exports: List['PatientExport'] = field_with_meta(title="Datautleveringer", description="Datautleveringer knyttet til pasienten", default_factory=list)
-    pvk_events: List['PvkEvent'] = field_with_meta(title="Personvernkomponent-hendelser", description="Pasientens reservasjoner og trukkede reservasjoner", default_factory=list)
+    id_history: List["PatientIdentifierHistory"] = field_with_meta(title="ID-historikk", description="Pasientens ID-historikk", default_factory=list)
 
-    name_aes: str = field_with_meta(title="Pasientens navn som angitt i DICOM", 
-        description="Må se hvordan fornavn og etternavn deles opp når det kommer fra PAS i DIPS, så skjer nok en liten endring her. I DICOM benyttes ETTERNAVN^FORNAVN.", encrypted=True)
+    id_number_aes: str = field_with_meta(title="Pasientidentifikasjon", description="Kan være av ulik `id_type`", encrypted=True)
+    id_type: Literal["FNR", "DNR", "FHNR", "HNR"] = field_with_meta(title="Type av pasientidentifikasjon.", description="Kan være av ulik `id_type`")
+    
     birth_date_aes: str = field_with_meta(title="Pasientens fødselsdato", description="", encrypted=True, unit="YYYY-MM-DD")
     ois_patient_id_aes: str = field_with_meta(title="OIS pasient ID", description="PasientID i stråleterapisystem (f.eks. PatientSer i Aria)", encrypted=True)
     epj_patient_id_aes: str = field_with_meta(title="EPJ pasient ID", description="PasientID i journalsystem", encrypted=True)
 
+class PatientIdentifierHistory(BaseModel):
+    """ID-historikk
+       ============
 
-class PatientID(BaseModel):
-    """En av flere av F/D/H-numrene til pasienten
-       ========================================== 
-    
-        Oppdateres med nytt nummer når dette blir tilgjengelig. 
-        PVK håndterer bl.a. dette smidig hvor nyeste fnr alltid returneres.
-        Behøver rutine for å fange når det skjer oppdateringer."""
+       Historikk over de ulike FNR/DNR/FHNR/HNR pasienten har hatt, til bruk ved kobling av pasienter som får ny nummer."""
 
-    id: int = field_with_meta(title="Radindeks for pasient ID", description="Dannes automatisk ved opprettelse av hver pasient-ID")
+    id: int = field_with_meta(title="Radindeks for adresse", description="Dannes automatisk ved opprettelse av ny adresse")
     fk_patient_key: int = field_with_meta(title="Registernøkkel", description="Pseudonymisert nøkkel for pasienten i registeret")
-    # patient: Optional[Patient] = field_with_meta(title="", description="", default=None)
-    dt_added: datetime = field_with_meta(title="Dato lagt til", description="Dato for når denne pasient-ID-en ble lagt til i registeret")
-    fnr_aes: str = field_with_meta(title="Pasientidentifikasjon", description="Kan være av ulik `fnr_type`", encrypted=True)
-    fnr_type: Literal["F", "H", "D"] = field_with_meta(title="Type pasientidentifikasjon", 
-        description="Dersom pasienten har flere tilknyttet seg, er det det siste F-nummeret som er gjeldende.", values=["F", "H", "D"])
 
+    id_number_aes: str = field_with_meta(title="Pasientidentifikasjon", description="Kan være av ulik `id_type`", encrypted=True)
+    id_type: Literal["FNR", "DNR", "FHNR", "HNR"] = field_with_meta(title="Type av pasientidentifikasjon.", description="Kan være av ulik `id_type`")
+    dt_added: datetime = field_with_meta(title="Dato lagt til", description="Dato for når aktuell adresse ble lagt til")
 
 class Address(BaseModel):
     """Tabell for adresser
@@ -108,17 +100,50 @@ class Course(BaseModel):
 
 
 class DataStatus(BaseModel):
+    """ Datastatus
+        ==========
+    """
+    
     id: int = field_with_meta(title="Radindeks for datastatus", description="Dannes automatisk ved opprettelse av ny statusmelding")
     fk_course_id: int = field_with_meta(title="FK course ID", description="Koblingsnøkkel for behandlingsforløp")
     course: Optional[Course] = field_with_meta(title="Tilknyttet behandlingsserie", description="Course-objekt som hører til denne datastatusen", default=None)
-    fk_patient_key: str = field_with_meta(title="Registernøkkel", description="Pseudonymisert nøkkel for pasienten i registeret")
-    patient: Optional[Patient] = field_with_meta(title="Tilknyttet pasient", description="Pasientobjekt som hører til denne datastatusen", default=None)
     epj_status_aes: int = field_with_meta(title="EPJ status", description="Statuskode for dataoverføring EPJ. Har behov for en god datamodell eller støttetabell her, f.eks. for å logge hver hendelse med statusmeldinger", encrypted=True)
     dicom_status_aes: int = field_with_meta(title="DICOM status", description="Statuskode for dataoverføring DICOM. Har behov for en god datamodell eller støttetabell her, f.eks. for å logge hver hendelse med statusmeldinger", encrypted=True)
-    consent_status_aes: int = field_with_meta(title="PVK status", description="Statuskode for personvernkomponenten. Tabellene PvkSync og PvkEvents inneholder mer informasjon om mottate meldinger her", encrypted=True)
     prom_status_aes: int = field_with_meta(title="PROMs status", description="Statuskode for pasientrapporterte data. Har behov for en god datamodell eller støttetabell her, f.eks. for å logge hver hendelse med statusmeldinger", encrypted=True)
 
+class MapStudyUID(BaseModel):
+    """ Kobling av Study UID
+        ===================="""
 
+    id: int = field_with_meta(title="Radindeks for Study UID-kobling", description="Dannes automatisk ved opprettelse av ny statusmelding")
+    fk_course_id: int = field_with_meta(title="FK course ID", description="Koblingsnøkkel for behandlingsserie")
+    course: Optional[Course] = field_with_meta(title="Tilknyttet behandlingsserie", description="Course-objekt som hører til denne datastatusen", default=None)
+
+    study_uid_orig: str = field_with_meta(title="Opprinnelig Study UID", description="Den opprinnelige verdien av Study UID fra kildedata", default=None)
+    study_uid_pseudo: str = field_with_meta(title="Pseuonymisert Study UID", description="Den pseudonymiserte verdien av Study UID i NORPREG", default=None)
+
+class MapSeriesUID(BaseModel):
+    """ Kobling av Series UID
+        ===================="""
+
+    id: int = field_with_meta(title="Radindeks for Series UID-kobling", description="Dannes automatisk ved opprettelse av ny statusmelding")
+    fk_course_id: int = field_with_meta(title="FK course ID", description="Koblingsnøkkel for behandlingsserie")
+    course: Optional[Course] = field_with_meta(title="Tilknyttet behandlingsserie", description="Course-objekt som hører til denne datastatusen", default=None)
+
+    series_uid_orig: str = field_with_meta(title="Opprinnelig Series UID", description="Den opprinnelige verdien av Series UID fra kildedata", default=None)
+    series_uid_pseudo: str = field_with_meta(title="Pseuonymisert Series UID", description="Den pseudonymiserte verdien av Series UID i NORPREG", default=None)
+    
+class MapInstanceUID(BaseModel):
+    """ Kobling av Instance UID
+        ===================="""
+
+    id: int = field_with_meta(title="Radindeks for Instance UID-kobling", description="Dannes automatisk ved opprettelse av ny statusmelding")
+    fk_course_id: int = field_with_meta(title="FK course ID", description="Koblingsnøkkel for behandlingsserie")
+    course: Optional[Course] = field_with_meta(title="Tilknyttet behandlingsserie", description="Course-objekt som hører til denne datastatusen", default=None)
+
+    instance_uid_orig: str = field_with_meta(title="Opprinnelig Instance UID", description="Den opprinnelige verdien av Instance UID fra kildedata", default=None)
+    instance_uid_pseudo: str = field_with_meta(title="Pseuonymisert Instance UID", description="Den pseudonymiserte verdien av Instance UID i NORPREG", default=None)
+'''
 class Study(BaseModel):
     id: int = field_with_meta(title="Radindeks for studien", description="Dannes automatisk ved opprettelse av ny studie")
     conquest_name: str = field_with_meta(title="Conquest PACS AES title", description="Navnet på Conquest-instansen som er knyttet til dette studiet dersom det finnes")
@@ -173,7 +198,6 @@ class RegistryExport(BaseModel):
     fk_export_id: int = field_with_meta(title="FK export ID", description="Koblingsnøkkel mot eksport ID")
     export: Optional[Export] = field_with_meta(title="Tilknyttet utleveringsobjekt", description="Utleveringsobjekt som hører til denne register-utleveringen", default=None)
 
-
 class PvkEvent(BaseModel):
     """Pasientvis oppdatering fra Pvk
        ==============================
@@ -200,3 +224,4 @@ class PvkSync(BaseModel):
     new_reservations: int = field_with_meta(title="Antall nye reservasjoner", description="Oppsummert fra alle enkeltvise svar")
     new_reservation_removals: int = field_with_meta(title="Antall nye fjernede reservasjoner", description="Oppsummert fra alle enkeltvise svar")
     error_message_aes: str = field_with_meta(title="Feilmelding", description="Dersom det var en feilmelding i API-kallet legges den her", encrypted=True)
+'''
