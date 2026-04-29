@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import List, Optional
 from pydantic import BaseModel, PlainSerializer, BeforeValidator, Field
 
-from norpreg.Dataclasses.utils import field_with_meta
+from .utils import field_with_meta
 
 class Plan(BaseModel):
     """Parquet storage for array data

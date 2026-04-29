@@ -4,7 +4,7 @@ from pydantic import BaseModel, PlainSerializer, BeforeValidator, Field
 from typing import Optional, List, Literal
 from datetime import datetime
 
-from norpreg.Dataclasses.utils import field_with_meta
+from .utils import field_with_meta
 
 def dicom_date_formatter(d: str) -> str:
 	return datetime.strptime(d, "%Y%m%d").strftime("%Y-%m-%d")
