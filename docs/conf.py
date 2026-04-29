@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../model/'))
+sys.path.insert(0, os.path.abspath('../models/'))
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -37,15 +37,16 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 html_logo = 'static/norpreg_logo.png'
 
-
-autodoc_pydantic_model_show_json = True
+autodoc_pydantic_model_show_json = False
 autodoc_pydantic_model_show_config_list = False
-autodoc_pydantic_model_show_field_summary = False
+autodoc_pydantic_model_show_field_summary = True
 autodoc_pydantic_model_show_field_list = True
 autodoc_pydantic_model_member_order = "bysource"
 autodoc_pydantic_field_doc_policy = "description"
 autodoc_pydantic_field_swap_name_and_alias = False
 autodoc_pydantic_field_show_alias = False
+autodoc_pydantic_model_undoc_members = True
+autodoc_pydantic_model_members = True
 autodoc_pydantic_field_list_validators = True
 autodoc_pydantic_model_hide_paramlist = True
 autodoc_pydantic_settings_hide_paramlist = True
