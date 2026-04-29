@@ -66,7 +66,7 @@ class DICOM(BaseModel):
 	redcap_repeat_instrument: str = Field('dicom', transfer_only=True)
 	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Format er 7-karakter heksadesimal (f.eks. a72bf40)')
 	
-	dcm_course_id: Optional[str] = field_with_meta(title='DICOM Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
+	dcm_course_id: Optional[str] = field_with_meta(title='DICOM Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
 
 	study_instance_uid: Optional[str] = field_with_meta(title='Study instance UID', description='Koblingsnøkkel mot DICOM-datasett på Study-nivå')
 	study_description: Optional[str] = field_with_meta(title='Study description', description='Studiebeskrivelse fra DICOM-datasett på Study-nivå')
@@ -88,7 +88,7 @@ class Fraction(BaseModel):
 	redcap_repeat_instrument: str = Field('fraction', transfer_only=True)
 	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
 
-	fx_course_id: Optional[str] = field_with_meta(title='FK Fraction - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
+	fx_course_id: Optional[str] = field_with_meta(title='FK Fraction - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
 	
 	fx_plan_uid: Optional[str] = field_with_meta(title='FK Fraction - Plan UID', description='Koblingsnøkkel mot DICOM-datasett på Plan UID-nivå')
 	treatment_machine_name: Optional[str] = field_with_meta(title='Treatment machine station name', description='Lokalt definert navn på behandlingsapparat', dicom="(300A,00B2)")
@@ -133,8 +133,8 @@ class Plan(BaseModel):
 	redcap_repeat_instrument: str = Field('plan', transfer_only=True)
 	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
 
-	plan_course_id: Optional[str] = field_with_meta(title='FK Plan - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
-	plan_uid: Optional[str] = field_with_meta(title='Plan SOP Instance UID', description='Denne RT Plan filens SOP Instance UID, brukes for å koble mot denne', hidden=True)
+	plan_course_id: Optional[str] = field_with_meta(title='FK Plan - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
+	plan_uid: Optional[str] = field_with_meta(title='Plan SOP Instance UID', description='Denne RT Plan filens SOP Instance UID, brukes for å koble mot denne')
 
 	ct_study_date: Optional[DICOMDate] = field_with_meta(title='CT Study date', description='Dato for Plan CT', dicom="(0008, 0020)")
 	plan_ct_series_uid: Optional[str] = field_with_meta(title="CT Series UID", description="UID for den tilknyttede CT-serien", dicom="(0020,000E)")
@@ -185,7 +185,7 @@ class DVH(BaseModel):
 	redcap_repeat_instrument: str = Field('structure', transfer_only=True)
 	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
 
-	struct_course_id: Optional[str] = field_with_meta(title='FK Structure - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
+	struct_course_id: Optional[str] = field_with_meta(title='FK Structure - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
 	struct_plan_uid: Optional[str] = field_with_meta(title='FK Structure - Plan UID', description='Koblingsnøkkel mot DICOM-datasett på Plan UID-nivå')
 	struct_uid: Optional[str] = field_with_meta(title='RT Structure SOP Instance UID', description='Denne RT Structure filens SOP Instance UID, brukes for å koble mot denne')
 	struct_dose_uid: Optional[str] = field_with_meta(title="RT Dose SOP Instance UID", description="Kobling mot Dosematrisen beregningen er gjort med")
@@ -277,7 +277,7 @@ class DR(BaseModel):
 	redcap_repeat_instrument: str = Field('dose_reference', transfer_only=True)
 
 	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
-	dr_course_id: Optional[str] = field_with_meta(title='FK Dose Reference - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
+	dr_course_id: Optional[str] = field_with_meta(title='FK Dose Reference - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
 	dr_plan_uid: Optional[str] = field_with_meta(title='FK Dose Reference - Plan UID', description='Koblingsnøkkel mot DICOM-datasett på Plan UID-nivå')
 	dr_dose_uid: Optional[str] = field_with_meta(title="RT DOse SOP Instance UID", description="Kobling mot Dosematrisen beregningen er gjort med")
 
@@ -300,7 +300,7 @@ class Beam(BaseModel):
 	redcap_repeat_instrument: str = Field('beam', transfer_only=True)
 
 	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
-	beam_course_id: Optional[str] = field_with_meta(title='FK Beam - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
+	beam_course_id: Optional[str] = field_with_meta(title='FK Beam - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
 	beam_plan_uid: Optional[str] = field_with_meta(title='FK Beam - Plan UID', description='Koblingsnøkkel mot DICOM-datasett på Plan UID-nivå')
 
 	beam_tx_modality: Optional[str] = field_with_meta(title='Treatment modality', 
