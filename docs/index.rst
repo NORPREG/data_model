@@ -18,17 +18,8 @@ Datamodellen inkluderer:
 - **Strukturer** – Geometriske data, organkonturering og dose-volume histogrammer
 - **Kodelister** – Kryptert lagring av personidentifiserbare opplysninger
 
-Se den fullstendige :doc:`dokumentasjonen av datamodellene <models>`.
-
-Søk
-===
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
    :caption: Dokumentasjon
 
    models

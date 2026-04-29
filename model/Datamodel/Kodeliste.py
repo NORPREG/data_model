@@ -124,7 +124,8 @@ class DataStatus(BaseModel):
 
 class MapStudyUID(BaseModel):
     """ Kobling av Study UID
-        ===================="""
+        ====================
+    """
 
     id: int = field_with_meta(title="Radindeks for Study UID-kobling", description="Dannes automatisk ved opprettelse av ny statusmelding")
     fk_course_id: int = field_with_meta(title="FK course ID", description="Koblingsnøkkel for behandlingsserie")
@@ -135,7 +136,8 @@ class MapStudyUID(BaseModel):
 
 class MapSeriesUID(BaseModel):
     """ Kobling av Series UID
-        ===================="""
+        =====================
+    """
 
     id: int = field_with_meta(title="Radindeks for Series UID-kobling", description="Dannes automatisk ved opprettelse av ny statusmelding")
     fk_course_id: int = field_with_meta(title="FK course ID", description="Koblingsnøkkel for behandlingsserie")
@@ -146,7 +148,8 @@ class MapSeriesUID(BaseModel):
     
 class MapInstanceUID(BaseModel):
     """ Kobling av Instance UID
-        ===================="""
+        =======================
+    """
 
     id: int = field_with_meta(title="Radindeks for Instance UID-kobling", description="Dannes automatisk ved opprettelse av ny statusmelding")
     fk_course_id: int = field_with_meta(title="FK course ID", description="Koblingsnøkkel for behandlingsserie")

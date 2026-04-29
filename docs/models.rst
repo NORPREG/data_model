@@ -5,7 +5,7 @@ Modell for stråleterapi
     :members:
 
 Modell for Nasjonalt Pasientregister-data
--------------------------------------
+-----------------------------------------
 
 Denne modulen inneholder data fra NPR og representerer offisiell helsefaglig dokumentasjon fra sykehusene. Den inkluderer opplysninger om inn- og utdatoer, omsorgsnivå, prosedyrekoder, diagnose, behandlingsintensjon og maskin-ID.
 
