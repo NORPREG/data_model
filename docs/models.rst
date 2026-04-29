@@ -43,7 +43,7 @@ Modell for kliniske data
 Det foreligger mange parametere som er koblet mot ulike kodeverk som ICD10, SNOMED CT, AJCC, MedDRA CTCAE o.l., det vil fremgå hvor der et aktuelt.
 Denne modulen er IKKE ferdig ennå, og vil bl.a. speile dokumentasjonen `her <http://bjornna.openness.no/oncology-export/index.html>`_ når den er klar.
 
-.. automodule:: Datamodel.Clinical
+.. automodule:: Datamodel.EPJ
     :members:
 
 Modell for kodeliste for koblingsnøkler
