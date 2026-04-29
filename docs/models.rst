@@ -19,7 +19,7 @@ Kilder i datamodellen
 Modell for stråleterapi
 -----------------------
 
-.. automodule:: Datamodel.RT
+.. automodule:: Datamodel.RT.Beam
     :members:
 
 Modell for Nasjonalt Pasientregister-data
