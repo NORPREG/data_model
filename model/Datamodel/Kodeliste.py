@@ -93,7 +93,7 @@ class Course(BaseModel):
     dt_added: datetime = field_with_meta(title="Dato lagt til", description="Dato for når aktuelt behandlingsforløp ble lagt til")
     fk_patient_key: str = field_with_meta(title="Registernøkkel", description="Pseudonymisert nøkkel for pasienten i registeret")
     patient: Optional[Patient] = field_with_meta(title="Tilknyttet pasient", description="Pasientobjekt som hører til dette behandlingsforløpet", default=None)
-    patient_exports: List['PatientExport'] = field_with_meta(title="", description="", default_factory=list)
+    # patient_exports: List['PatientExport'] = field_with_meta(title="", description="", default_factory=list)
     fk_datastatus_id: int = field_with_meta(title="FK datastatus ID", description="Koblingsnøkkel mot datastatus for dette behandlingsforløpet")
     data_status: Optional['DataStatus'] = field_with_meta(title="", description="", default=None)
     ois_course_id_aes: str = field_with_meta(title="OIS course ID", description="Koblingsnøkkel for behandlingsforløp / course i stråleterapisystem", encrypted=True)
