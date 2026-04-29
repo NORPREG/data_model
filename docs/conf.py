@@ -30,6 +30,14 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 language = 'en'
 
+# Autodoc settings
+autodoc_default_options = {
+    'members': True,
+    'member-order': 'bysource',
+    'undoc-members': True,
+    'ignore-module-all': False,
+}
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
@@ -47,8 +55,8 @@ autodoc_pydantic_field_doc_policy = "description"
 autodoc_pydantic_field_swap_name_and_alias = False
 autodoc_pydantic_field_show_alias = False
 autodoc_pydantic_field_list_validators = False
-autodoc_pydantic_model_hide_paramlist = False
-autodoc_pydantic_settings_hide_paramlist = False
+autodoc_pydantic_model_hide_paramlist = True
+autodoc_pydantic_settings_hide_paramlist = True
 autodoc_pydantic_model_show_validator_summary = False
 
 autodoc_pydantic_model_show_config_summary = False
