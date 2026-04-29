@@ -1,25 +1,7 @@
-Datamodell for Norsk proton- og stråleterapiregister
-====================================================
-
-Datamodellen for Norsk proton- og stråleterapiregister (NORPREG) er strukturert rundt flere komplementære datakilder som til sammen gir en komplett oversikt over behandling, pasienter og planlegging.
-
-Kilder i datamodellen
----------------------
-
-**Stråleterapi (RT)** - Hovedkilden for behandlingsdata fra DICOM RT-objekter, inkludert doseplaner, fraksjoner og behandlingsparametere.
-
-**Nasjonalt Pasientregister (NPR)** - Standardisert rapportering fra stråleterapienhetene, med opplysninger på fraksjonsnivå med enkel dose, omsorgsnivå, diagnose og behandlingsintensjon.
-
-**Strukturer** - Geometriske data fra doseplaner, inkludert organkonturering (ROI), Dose-Volume Histogramer (DVH) og beregnet volumdata lagret i Parquet-format for effektiv lagring og analyse. Dette datalageret er ikke en del av det den sentrale registerdatabasen.
-
-**Kliniske data** - Samlet pasient- og behandlingsinformasjon som kobles mot relevante kodeverk (ICD-10, SNOMED CT, AJCC, MedDRA/CTCAE osv.). Hentes fra EPJ via Strukturert Journal for Kreft.
-
-**Kodelister** - Sentral lagring av krypterte personidentifiserbare opplysninger, koblingsnøkler og dataflyt med eksterne kilder.
-
 Modell for stråleterapi
 -----------------------
 
-.. automodule:: Datamodel.RT.Beam
+.. automodule:: Datamodel.RT
     :members:
 
 Modell for Nasjonalt Pasientregister-data

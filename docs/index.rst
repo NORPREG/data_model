@@ -5,12 +5,6 @@ Velkommen til dokumentasjonen for **Norsk proton- og stråleterapiregister (NORP
 
 Datamodellen beskriver strukturen for innsamling, lagring og behandling av data fra stråleterapienheter ved norske helseinstitusjoner.
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Dokumentasjon
-
-   model
-
 Introduksjon
 ============
 
@@ -24,7 +18,7 @@ Datamodellen inkluderer:
 - **Strukturer** – Geometriske data, organkonturering og dose-volume histogrammer
 - **Kodelister** – Kryptert lagring av personidentifiserbare opplysninger
 
-Se den fullstendige :doc:`dokumentasjonen av datamodellene <model>`.
+Se den fullstendige :doc:`dokumentasjonen av datamodellene <models>`.
 
 Søk
 ===
@@ -32,3 +26,9 @@ Søk
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Dokumentasjon
+
+   models
