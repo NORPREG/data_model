@@ -25,7 +25,18 @@ class Registry(BaseModel):
     """
 
     id: int = field_with_meta(title="Radindeks for registeret")
-    name: Literal[tuple(registries.keys())] = field_with_meta(title="Registernavn", 
+    name: Literal[
+            "NORPREG", 
+            "KREST-UNN", 
+            "KREST-NLSH", 
+            "KREST-SOH", 
+            "KREST-AAL", 
+            "KREST-HUS", 
+            "KREST-SUS", 
+            "KREST-SSHF", 
+            "KREST-SIG", 
+            "KREST-OUS"
+    ] = field_with_meta(title="Registernavn", 
         description="Navn på registeret. Ikke alle registerne er formaliserte, så navnene kan unnvike. Formaliserte registre er markert.", 
         values=[f"{k}: {v}" for k,v in registries.items()])
     patients: List['Patient'] = field_with_meta(title="Tilknyttede pasienter", default_factory=list)

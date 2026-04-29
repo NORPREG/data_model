@@ -84,7 +84,7 @@ class Course(BaseModel):
     )
 
     clinics: List["Clinic"] = Field(
-        default_factory=List, 
+        default_factory=list, 
         exclude=True, 
         title="Clinic-tabell",
         json_schema_extra={
@@ -92,7 +92,7 @@ class Course(BaseModel):
         }
     )
     studies: List["Studies"] = Field(
-        default_factory=List, 
+        default_factory=list, 
         exclude=True, 
         title="Studies-tabell",
         json_schema_extra={
@@ -156,18 +156,18 @@ class Clinic(BaseModel):
     cln_multi_prim_basis: Optional[Code] = Field(None, title="Multiple primære (grunnlag)")
 
     # child collections
-    comorbidities: List["Comorbidity"] = Field(default_factory=List, exclude=True, title="Comorbidity-tabell", json_schema_extra={"document_only": True})
-    prev_cancers: List["PrevCancer"] = Field(default_factory=List, exclude=True, title="PrevCancer-tabell", json_schema_extra={"document_only": True})
-    prev_treatments: List["PrevTreatment"] = Field(default_factory=List, exclude=True, title="PrevTreatment-tabell", json_schema_extra={"document_only": True})
-    adverse_events: List["Adverse"] = Field(default_factory=List, exclude=True, title="Adverse-tabell", json_schema_extra={"document_only": True})
-    radiology: List["Radiology"] = Field(default_factory=List, exclude=True, title="Radiology-tabell", json_schema_extra={"document_only": True})
-    anatomy: List["Anatomy"] = Field(default_factory=List, exclude=True, title="Anatomy-tabell", json_schema_extra={"document_only": True})
-    anatomy_freetext: List["AnatomyFreeText"] = Field(default_factory=List, exclude=True, title="AnatomyFreeText-tabell", json_schema_extra={"document_only": True})
-    mets: List["Mets"] = Field(default_factory=List, exclude=True, title="Mets-tabell", json_schema_extra={"document_only": True})
-    lymph_mets: List["LymphMets"] = Field(default_factory=List, exclude=True, title="LymphMets-tabell", json_schema_extra={"document_only": True})
-    lab_samples: List["LabSample"] = Field(default_factory=List, exclude=True, title="LabSample-tabell", json_schema_extra={"document_only": True})
-    lab_tests: List["LabTest"] = Field(default_factory=List, exclude=True, title="LabTest-tabell", json_schema_extra={"document_only": True})
-    treatment_summaries: List["TreatmentSummary"] = Field(default_factory=List, exclude=True, title="TreatmentSummary-tabell", json_schema_extra={"document_only": True})
+    comorbidities: List["Comorbidity"] = Field(default_factory=list, exclude=True, title="Comorbidity-tabell", json_schema_extra={"document_only": True})
+    prev_cancers: List["PrevCancer"] = Field(default_factory=list, exclude=True, title="PrevCancer-tabell", json_schema_extra={"document_only": True})
+    prev_treatments: List["PrevTreatment"] = Field(default_factory=list, exclude=True, title="PrevTreatment-tabell", json_schema_extra={"document_only": True})
+    adverse_events: List["Adverse"] = Field(default_factory=list, exclude=True, title="Adverse-tabell", json_schema_extra={"document_only": True})
+    radiology: List["Radiology"] = Field(default_factory=list, exclude=True, title="Radiology-tabell", json_schema_extra={"document_only": True})
+    anatomy: List["Anatomy"] = Field(default_factory=list, exclude=True, title="Anatomy-tabell", json_schema_extra={"document_only": True})
+    anatomy_freetext: List["AnatomyFreeText"] = Field(default_factory=list, exclude=True, title="AnatomyFreeText-tabell", json_schema_extra={"document_only": True})
+    mets: List["Mets"] = Field(default_factory=list, exclude=True, title="Mets-tabell", json_schema_extra={"document_only": True})
+    lymph_mets: List["LymphMets"] = Field(default_factory=list, exclude=True, title="LymphMets-tabell", json_schema_extra={"document_only": True})
+    lab_samples: List["LabSample"] = Field(default_factory=list, exclude=True, title="LabSample-tabell", json_schema_extra={"document_only": True})
+    lab_tests: List["LabTest"] = Field(default_factory=list, exclude=True, title="LabTest-tabell", json_schema_extra={"document_only": True})
+    treatment_summaries: List["TreatmentSummary"] = Field(default_factory=list, exclude=True, title="TreatmentSummary-tabell", json_schema_extra={"document_only": True})
 
 
 # ============================================================
@@ -324,7 +324,7 @@ class Mets(BaseModel):
     mets_side: Optional[Code] = Field(None, title="Kroppsside")
     mets_other_meth: Optional[str] = Field(None, title="Annen metode")
 
-    methods: List["MetsMethod"] = Field(default_factory=List, exclude=True, title="MetsMethod-tabell", json_schema_extra={"document_only": True})
+    methods: List["MetsMethod"] = Field(default_factory=list, exclude=True, title="MetsMethod-tabell", json_schema_extra={"document_only": True})
 
 
 class LymphMets(BaseModel):
@@ -341,7 +341,7 @@ class LymphMets(BaseModel):
     lmets_side: Optional[Code] = Field(None, title="Kroppsside")
     lmets_other_meth: Optional[str] = Field(None, title="Annen metode")
 
-    methods: List["MetsMethod"] = Field(default_factory=List, exclude=True, title="MetsMethod-tabell", json_schema_extra={"document_only": True})
+    methods: List["MetsMethod"] = Field(default_factory=list, exclude=True, title="MetsMethod-tabell", json_schema_extra={"document_only": True})
 
 
 class MetsMethod(BaseModel):
@@ -463,6 +463,6 @@ class TreatmentSummary(BaseModel):
     txsum_med_summary_txt: Optional[str] = Field(None, title="Overordnet beskrivelse av medikamentell behandling")
     txsum_rt_summary_txt: Optional[str] = Field(None, title="Overordnet beskrivelse av strålebehandling")
 
-    surgeries: List["TreatmentSurgery"] = Field(default_factory=List, exclude=True, title="TreatmentSurgery-tabell", json_schema_extra={"document_only": True})
-    medicines: List["TreatmentMedicine"] = Field(default_factory=List, exclude=True, title="TreatmentMedicine-tabell", json_schema_extra={"document_only": True})
-    radiotherapy: List["TreatmentRT"] = Field(default_factory=List, exclude=True, title="TreatmentRT-tabell", json_schema_extra={"document_only": True})
+    surgeries: List["TreatmentSurgery"] = Field(default_factory=list, exclude=True, title="TreatmentSurgery-tabell", json_schema_extra={"document_only": True})
+    medicines: List["TreatmentMedicine"] = Field(default_factory=list, exclude=True, title="TreatmentMedicine-tabell", json_schema_extra={"document_only": True})
+    radiotherapy: List["TreatmentRT"] = Field(default_factory=list, exclude=True, title="TreatmentRT-tabell", json_schema_extra={"document_only": True})
