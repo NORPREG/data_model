@@ -35,8 +35,9 @@ language = 'en'
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-html_logo = 'static/norpreg_logo.png'
+html_logo = '_static/norpreg_logo.png'
 
+autosummary_generate = True
 autodoc_pydantic_model_show_json = False
 autodoc_pydantic_model_show_config_list = False
 autodoc_pydantic_model_show_field_summary = True

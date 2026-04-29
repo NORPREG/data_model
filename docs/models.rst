@@ -21,6 +21,7 @@ Modell for stråleterapi
 
 .. automodule:: Datamodel.RT
     :members:
+    :undoc-members:
 
 Modell for Nasjonalt Pasientregister-data
 -------------------------------------
@@ -29,6 +30,7 @@ Denne modulen inneholder data fra NPR og representerer offisiell helsefaglig dok
 
 .. automodule:: Datamodel.NPR
     :members:
+    :undoc-members:
 
 Modell for strukturer
 ---------------------
@@ -37,14 +39,16 @@ Denne modulen lagrer geometriske data fra doseplaner, inkludert organkonturering
 
 .. automodule:: Datamodel.Strukturer
     :members:
+    :undoc-members:
 
 Modell for kliniske data
 ------------------------
 Det foreligger mange parametere som er koblet mot ulike kodeverk som ICD10, SNOMED CT, AJCC, MedDRA CTCAE o.l., det vil fremgå hvor der et aktuelt.
-Denne modulen er IKKE ferdig ennå, og vil bl.a. speile dokumentasjonen `her <http://bjornna.openness.no/oncology-export/index.html>`_ når den er klar.
+Denne modulen er under arbeid, og reflekterer "Innrapportering til NORPREG v1" eksportskjema fra DIPS.
 
 .. automodule:: Datamodel.EPJ
     :members:
+    :undoc-members:
 
 Modell for kodeliste for koblingsnøkler
 ---------------------------------------
@@ -53,3 +57,4 @@ og loggføre reservasjonsstatus. Deler av denne kodelisten er kryptert.
 
 .. automodule:: Datamodel.Kodeliste
     :members:
+    :undoc-members:
