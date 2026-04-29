@@ -30,14 +30,6 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 language = 'en'
 
-# Autodoc settings
-autodoc_default_options = {
-    'members': True,
-    'member-order': 'bysource',
-    'undoc-members': True,
-    'ignore-module-all': False,
-}
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
@@ -47,21 +39,21 @@ html_logo = 'static/norpreg_logo.png'
 
 
 autodoc_pydantic_model_show_json = True
-autodoc_pydantic_model_show_config_list = True
-autodoc_pydantic_model_show_field_summary = True
+autodoc_pydantic_model_show_config_list = False
+autodoc_pydantic_model_show_field_summary = False
 autodoc_pydantic_model_show_field_list = True
 autodoc_pydantic_model_member_order = "bysource"
-autodoc_pydantic_field_doc_policy = "both"
-autodoc_pydantic_field_swap_name_and_alias = True
-autodoc_pydantic_field_show_alias = True
+autodoc_pydantic_field_doc_policy = "description"
+autodoc_pydantic_field_swap_name_and_alias = False
+autodoc_pydantic_field_show_alias = False
 autodoc_pydantic_field_list_validators = True
-autodoc_pydantic_model_hide_paramlist = False
-autodoc_pydantic_settings_hide_paramlist = False
-autodoc_pydantic_model_show_validator_summary = True
+autodoc_pydantic_model_hide_paramlist = True
+autodoc_pydantic_settings_hide_paramlist = True
+autodoc_pydantic_model_show_validator_summary = False
 
-autodoc_pydantic_model_show_config_summary = True
-autodoc_pydantic_model_show_config_members = True
-autodoc_pydantic_model_show_validator_members = True
+autodoc_pydantic_model_show_config_summary = False
+autodoc_pydantic_model_show_config_members = False
+autodoc_pydantic_model_show_validator_members = False
 autodoc_pydantic_model_hide_reused_validator = True
-autodoc_pydantic_field_show_required = True
-autodoc_pydantic_field_show_default = True
+autodoc_pydantic_field_show_required = False
+autodoc_pydantic_field_show_default = False
