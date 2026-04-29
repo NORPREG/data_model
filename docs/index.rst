@@ -9,7 +9,7 @@ Datamodellen beskriver strukturen for innsamling, lagring og behandling av data 
    :maxdepth: 3
    :caption: Dokumentasjon
 
-   models
+   model
 
 Introduksjon
 ============
@@ -24,7 +24,7 @@ Datamodellen inkluderer:
 - **Strukturer** – Geometriske data, organkonturering og dose-volume histogrammer
 - **Kodelister** – Kryptert lagring av personidentifiserbare opplysninger
 
-Se den fullstendige :doc:`dokumentasjonen av datamodellene <models>`.
+Se den fullstendige :doc:`dokumentasjonen av datamodellene <model>`.
 
 Søk
 ===

@@ -20,11 +20,11 @@ class Plan(BaseModel):
 
     structure_names: List[str] = field_with_meta(title="Strukturnavn", description="Navn på gjeldende struktur, fra RT Structure", dicom="(3006,0026)")
     structure_types: List[str] = field_with_meta(title="Strukturtype", description="Type på gjelende struktur (organ, PTV, ...), fra RT Structure", dicom="(3006,00A4)")
-    structure_volumes: List[float] = field_with_meta(title="Strukturvolum [cc]", description="Beregnet fra koordinatene med dicompyler")
-    dose_calc_sec: List[float] = field_with_meta(title="Doseberegningstid", description="Hvor lang tid for hele doseberegningen. Avhengig av algoritme: Små strukturer interpoleres mer.")
+    structure_volumes: List[float] = field_with_meta(title="Strukturvolum", unit="cc", description="Beregnet fra koordinatene med dicompyler")
+    dose_calc_sec: List[float] = field_with_meta(title="Doseberegningstid", unit="s", description="Hvor lang tid for hele doseberegningen. Avhengig av algoritme: Små strukturer interpoleres mer.")
 
     dvh_relative_volumes_nested: List[List[float]] = field_with_meta(title="DVH: vektor med relative volumer", description="Volumene går fra (0...1). Må sees i sammenheng med dvh_doses_gy_nested. Beregnet med dicompyler.")
-    dvh_doses_gy_nested: List[List[float]] = field_with_meta(title="DVH: vektor med dose [Gy]", description="Doseakse med bincenter-verdier, fra 0.05 Gy, 0.15 Gy, ... til Dmax for angitt struktur. Må sees i sammenheng med dvh_relative_volumes_nested. Beregned med dicompyler.")
+    dvh_doses_gy_nested: List[List[float]] = field_with_meta(title="DVH: vektor med dose", unit="Gy", description="Doseakse med bincenter-verdier, fra 0.05 Gy, 0.15 Gy, ... til Dmax for angitt struktur. Må sees i sammenheng med dvh_relative_volumes_nested. Beregned med dicompyler.")
     
     roi_coords_x_mm_nested: List[List[float]] = field_with_meta(title="ROI: Vektor med X-koordinater", description="Endimensjonal vektor med alle X-koordinatene, må sees i sammenheng med Y,Z. Oppløsningen er angitt i RT Structure.")
     roi_coords_y_mm_nested: List[List[float]] = field_with_meta(title="ROI: Vektor med Y-koordinater", description="Endimensjonal vektor med alle Y-koordinatene, må sees i sammenheng med X,Z. Oppløsningen er angitt i RT Structure.")

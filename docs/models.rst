@@ -21,7 +21,6 @@ Modell for stråleterapi
 
 .. automodule:: Datamodel.RT
     :members:
-    :undoc-members:
 
 Modell for Nasjonalt Pasientregister-data
 -------------------------------------
@@ -30,7 +29,6 @@ Denne modulen inneholder data fra NPR og representerer offisiell helsefaglig dok
 
 .. automodule:: Datamodel.NPR
     :members:
-    :undoc-members:
 
 Modell for strukturer
 ---------------------
@@ -39,7 +37,6 @@ Denne modulen lagrer geometriske data fra doseplaner, inkludert organkonturering
 
 .. automodule:: Datamodel.Strukturer
     :members:
-    :undoc-members:
 
 Modell for kliniske data
 ------------------------
@@ -48,7 +45,6 @@ Denne modulen er under arbeid, og reflekterer "Innrapportering til NORPREG v1" e
 
 .. automodule:: Datamodel.EPJ
     :members:
-    :undoc-members:
 
 Modell for kodeliste for koblingsnøkler
 ---------------------------------------
@@ -57,4 +53,3 @@ og loggføre reservasjonsstatus. Deler av denne kodelisten er kryptert.
 
 .. automodule:: Datamodel.Kodeliste
     :members:
-    :undoc-members:
