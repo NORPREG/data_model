@@ -21,6 +21,6 @@ def field_with_meta(title, description="", values=list(), dicom=None, unit=None,
 
 
 	if not default_factory:
-		return Field(default=default, alias=title, description=description_added)
+		return Field(default=default, title=title, description=description_added)
 	else:
-		return Field(default_factory=default_factory, alias=title, description=description_added)
+		return Field(default_factory=default_factory, title=title, description=description_added)
