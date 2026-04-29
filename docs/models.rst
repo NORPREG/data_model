@@ -1,14 +1,41 @@
 Datamodell for Norsk proton- og stråleterapiregister
 ====================================================
 
-Modellen for stråleterapi er ganske moden, og brukes i produksjon nå.
-Modellen for kliniske data er ikke ennå helt klar, men vil samkjøres med innmeldingsskjema fra DIPS når det går ut i 1.0.
+Datamodellen for Norsk proton- og stråleterapiregister (NORPREG) er strukturert rundt flere komplementære datakilder som til sammen gir en komplett oversikt over behandling, pasienter og planlegging.
+
+Kilder i datamodellen
+---------------------
+
+**Stråleterapi (RT)** - Hovedkilden for behandlingsdata fra DICOM RT-objekter, inkludert doseplaner, fraksjoner og behandlingsparametere.
+
+**Nasjonalt Pasientregister (NPR)** - Standardisert rapportering fra stråleterapienhetene, med opplysninger på fraksjonsnivå med enkel dose, omsorgsnivå, diagnose og behandlingsintensjon.
+
+**Strukturer** - Geometriske data fra doseplaner, inkludert organkonturering (ROI), Dose-Volume Histogramer (DVH) og beregnet volumdata lagret i Parquet-format for effektiv lagring og analyse. Dette datalageret er ikke en del av det den sentrale registerdatabasen.
+
+**Kliniske data** - Samlet pasient- og behandlingsinformasjon som kobles mot relevante kodeverk (ICD-10, SNOMED CT, AJCC, MedDRA/CTCAE osv.). Hentes fra EPJ via Strukturert Journal for Kreft.
+
+**Kodelister** - Sentral lagring av krypterte personidentifiserbare opplysninger, koblingsnøkler og dataflyt med eksterne kilder.
 
 Modell for stråleterapi
 -----------------------
-Det som ligger her er synkronisert mot datamodellen i REDCap.
 
 .. automodule:: Datamodel.RT
+    :members:
+
+Modell for Nasjonalt Pasientregister-data
+-------------------------------------
+
+Denne modulen inneholder data fra NPR og representerer offisiell helsefaglig dokumentasjon fra sykehusene. Den inkluderer opplysninger om inn- og utdatoer, omsorgsnivå, prosedyrekoder, diagnose, behandlingsintensjon og maskin-ID.
+
+.. automodule:: Datamodel.NPR
+    :members:
+
+Modell for strukturer
+---------------------
+
+Denne modulen lagrer geometriske data fra doseplaner, inkludert organkonturering (ROI-koordinater), Dose-Volume Histogramer (DVH) og beregnet volumdata. Dataene lagres effektivt i Parquet-format og er organisert per behandlingsplan med tilknyttet metadata om helseforetak, plan-år og pseudonymisert koblingsnøkkel.
+
+.. automodule:: Datamodel.Strukturer
     :members:
 
 Modell for kliniske data
@@ -22,9 +49,7 @@ Denne modulen er IKKE ferdig ennå, og vil bl.a. speile dokumentasjonen `her <ht
 Modell for kodeliste for koblingsnøkler
 ---------------------------------------
 Denne modellen benyttes for å lagre og kryptere direkte personidentifiserbare opplysninger i registeret, samt holde rede på dataflyt med eksterne kilder
-og loggføre reservasjonsstatus.
-
-Deler av denne kodelisten er kryptert. Da benyttes AES, CBC og PKCS#7. Nøkkelen er sikret i produksjonsmiljøet, mens IV er enkodet i tekstfeltet med `iv_b64:cipher_b64`.
+og loggføre reservasjonsstatus. Deler av denne kodelisten er kryptert.
 
 .. automodule:: Datamodel.Kodeliste
     :members:

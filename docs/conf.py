@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.abspath('../model/'))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'Datamodell for NORPREG'
-copyright = '2025, Helge Pettersen'
+copyright = '2026, Helge Pettersen'
 author = 'Helge Pettersen'
 release = '0.9'
 
@@ -33,8 +33,9 @@ language = 'en'
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_rtd_theme
 html_static_path = ['_static']
+html_logo = 'static/norpreg_logo.png'
 
 
 autodoc_pydantic_model_show_json = True  # Skru av JSON-visning hvis ikke ønskelig

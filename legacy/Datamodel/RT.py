@@ -4,7 +4,7 @@ from pydantic import BaseModel, PlainSerializer, BeforeValidator, Field
 from typing import Optional, List, Literal
 from datetime import datetime
 
-from norpreg.Dataclasses.utils import field_with_meta
+from .utils import field_with_meta
 
 def dicom_date_formatter(d: str) -> str:
 	return datetime.strptime(d, "%Y%m%d").strftime("%Y-%m-%d")
@@ -62,11 +62,12 @@ class DICOM(BaseModel):
 	   ============================
 	
 	"""
-	redcap_repeat_instance: str = Field('new', transfer_only=True)
-	redcap_repeat_instrument: str = Field('dicom', transfer_only=True)
-	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Format er 7-karakter heksadesimal (f.eks. a72bf40)', document_only=True)
-	
-	dcm_course_id: Optional[str] = field_with_meta(title='DICOM Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
+	# redcap_repeat_instance: str = 'new'
+	# redcap_repeat_instrument: str = "dicom"
+
+	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
+
+	dcm_course_id: Optional[str] = field_with_meta(title='DICOM Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
 
 	study_instance_uid: Optional[str] = field_with_meta(title='Study instance UID', description='Koblingsnøkkel mot DICOM-datasett på Study-nivå')
 	study_description: Optional[str] = field_with_meta(title='Study description', description='Studiebeskrivelse fra DICOM-datasett på Study-nivå')
@@ -84,13 +85,13 @@ class Fraction(BaseModel):
 	
 		Som hentet fra RT Record, og samkjørt med NPR-rapporten. For Mosaiq-systemer er det NPR-rapporten som er primærkilden."""
 
-	redcap_repeat_instance: str = Field('new', transfer_only=True)
-	redcap_repeat_instrument: str = Field('fraction', transfer_only=True)
-	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)', document_only=True)
+	# redcap_repeat_instance: str = 'new'
+	# redcap_repeat_instrument: str = "fraction"
+	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
 
-	fx_course_id: Optional[str] = field_with_meta(title='FK Fraction - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
-	
+	fx_course_id: Optional[str] = field_with_meta(title='FK Fraction - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
 	fx_plan_uid: Optional[str] = field_with_meta(title='FK Fraction - Plan UID', description='Koblingsnøkkel mot DICOM-datasett på Plan UID-nivå')
+
 	treatment_machine_name: Optional[str] = field_with_meta(title='Treatment machine station name', description='Lokalt definert navn på behandlingsapparat', dicom="(300A,00B2)")
 	treatment_machine_manufacturer: Optional[str] = field_with_meta(title='Treatment machine manufacturer', description='Leverandør av behandlingsapparat', dicom="(0008,0070)") # ADD THIS SOMEWHERE
 	treatment_machine_model: Optional[str] = field_with_meta(title='Treatment machine model name', description='Modellnavn på behandlingsapparat', dicom="(0008,1090)")
@@ -103,7 +104,7 @@ class Fraction(BaseModel):
 	cumulative_dose_delivered: Optional[float] = field_with_meta(title='Cumulative dose delivered [Gy]', description='Kumulativ dose så langt for denne behandlingsplanen. Summert BeamDose til primært normeringsvolum i hver RT Record', unit="Gy", dicom="(300A,0084)")
 	termination_status: Optional[Literal["NORMAL", "OPERATOR", "MACHINE", "UNKNOWN"]] = \
 		field_with_meta(title='Termination status', description='Termineringsstatus for denne behandlingsfraksjonen', values=["NORMAL", "OPERATOR", "MACHINE", "UNKNOWN"], dicom="(3008,002A)")
-	termination_code: Optional[str] = field_with_meta(title='Termination code', description='Termineringskode for denne behandlingsfraksjonen')
+	# termination_code: Optional[str] = field_with_meta(title='Termination code', description='Termineringskode for denne behandlingsfraksjonen')
 
 	# Treatment Termination Code (3008,002B) was previously included in this Module but has been retired. 
 	# See PS3.3-2023a. The RT Treatment Termination Reason Code Sequence (300A,0715) and 
@@ -121,7 +122,7 @@ class Fraction(BaseModel):
 	fx_completion: Optional[float] = field_with_meta(title='Fraction completion', 
 		description="Hvor mye av dose til normeringsvolum er levert i henhold til planlagt i denne fraksjonen."
 					" Den er beregnet som levert dose til primært normeringsvolum fra RT Records / planlagt dose til primært normeringsvolum "
-					"Angis som tall mellom 0 (ingenting levert) og 1 (levert som planlagt)")					
+					"Angis som tall mellom 0 (ingenting levert) og 1 (levert som planlagt)")
 
 class Plan(BaseModel):
 	"""Oversikt over en behandlingsplan
@@ -129,18 +130,14 @@ class Plan(BaseModel):
 	   
 	   Inneholder både informasjon fra RT Plan-filen, men også fra RT Record for å beregne leverte doser"""
 
-	redcap_repeat_instance: str = Field('new', transfer_only=True)
-	redcap_repeat_instrument: str = Field('plan', transfer_only=True)
-	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)', document_only=True)
+	#  redcap_repeat_instance: str = 'new'
+	# redcap_repeat_instrument: str = "plan"
+	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
 
-	plan_course_id: Optional[str] = field_with_meta(title='FK Plan - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
-	plan_uid: Optional[str] = field_with_meta(title='Plan SOP Instance UID', description='Denne RT Plan filens SOP Instance UID, brukes for å koble mot denne', hidden=True)
+	plan_course_id: Optional[str] = field_with_meta(title='FK Plan - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
+	plan_uid: Optional[str] = field_with_meta(title='Plan SOP Instance UID', description='Denne RT Plan filens SOP Instance UID, brukes for å koble mot denne')
 
 	ct_study_date: Optional[DICOMDate] = field_with_meta(title='CT Study date', description='Dato for Plan CT', dicom="(0008, 0020)")
-	plan_ct_series_uid: Optional[str] = field_with_meta(title="CT Series UID", description="UID for den tilknyttede CT-serien", dicom="(0020,000E)")
-	plan_for_uid: Optional[str] = field_with_meta(title="Frame of Reference UID", dicom="(0020,0052)")
-	plan_study_uid: Optional[str] = field_with_meta(title="Plan Study UID", dicom="(0020,000D)")
-	plan_series_uid: Optional[str] = field_with_meta(title="Plan Series UID", dicom="(0020,000E)")
 	plan_datetime: Optional[datetime] = field_with_meta(title='RT Plan datetime', description='Dato og tid for godkjent behandlingsplan', dicom="(300A, 0006)")
 	struct_datetime: Optional[datetime] = field_with_meta(title='RT Structure datetime', description='Dato og tid for inntegnede strukturer', dicom="(3006, 0008)")
 	dose_datetime: Optional[datetime] = field_with_meta(title='RT Dose datetime', description='Dato og tid for dosevolum', dicom="(300A, 0006)")
@@ -172,7 +169,6 @@ class Plan(BaseModel):
 	dose_grid_res_y: Optional[float] = field_with_meta(title='Dose grid resolution X [mm]', description='Oppløsning i dosegrid i Y-retning', unit="mm", dicom="(0028, 0030)")
 	heterogeneity_correction: Optional[str] = field_with_meta(title='Heterogeneity correction', description='Heterogeneitetskorreksjon for vev for doseberegning. Kommaseparert liste over ulike valg som er gjort.', dicom="(3004, 0014)", values=["IMAGE", "ROI_OVERRIDE", "WATER"])
 	complexity: Optional[float] = field_with_meta(title='Plan complexity', description='Young\'s plankompleksitet, beregnet ved jevn vekting i X- og Y- planet (c1=c2=1). MU-vektet sum av hver beams kompleksitet, som igjen er en MU-vektet sum av kontrollpunktenes kompleksitet.')
-	plan_delivered_source: Optional[Literal["NPR", "RTRECORD", ""]] = field_with_meta(title='Source for "delivered dose"', description='Hvilken datakilde er brukt for å beregne levert dose?', values=["NPR", "RTRECORD", None])
 	
 
 class DVH(BaseModel):
@@ -181,16 +177,14 @@ class DVH(BaseModel):
 
 	   Geometriske og dosimetriske data fra målvolum og behandlingsvolum"""
 
-	redcap_repeat_instance: str = Field('new', transfer_only=True)
-	redcap_repeat_instrument: str = Field('structure', transfer_only=True)
-	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)', document_only=True)
+	# redcap_repeat_instance: str = 'new'
+	# redcap_repeat_instrument: str = "structure"
+	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
 
-	struct_course_id: Optional[str] = field_with_meta(title='FK Structure - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
+	struct_course_id: Optional[str] = field_with_meta(title='FK Structure - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
 	struct_plan_uid: Optional[str] = field_with_meta(title='FK Structure - Plan UID', description='Koblingsnøkkel mot DICOM-datasett på Plan UID-nivå')
 	struct_uid: Optional[str] = field_with_meta(title='RT Structure SOP Instance UID', description='Denne RT Structure filens SOP Instance UID, brukes for å koble mot denne')
-	struct_dose_uid: Optional[str] = field_with_meta(title="RT Dose SOP Instance UID", description="Kobling mot Dosematrisen beregningen er gjort med")
 	ct_series_uid: Optional[str] = field_with_meta(title='CT Series UID', description='Koblingsnøkkel mot DICOM-datasett på Plan CT Series UID-nivå')
-	struct_for_uid: Optional[str] = field_with_meta(title="Frame of Reference UID", dicom="(0020,0052)")
 
 	is_dvh_plan_sum: Optional[bool] = field_with_meta(title='Is the DVH a plan-sum?', 
 		description="Beskriver underliggende struktur en enkelt plan eller hele " 
@@ -200,10 +194,6 @@ class DVH(BaseModel):
 		description="Standardisert / mappet navn på struktur. Her kommer nok litt endringer, f.eks. egne variabler for union, "
 			"doseregioner, høyre/venstre etc. Behov for egen parsing per institusjon, men håper vi kan ligge tett opp mot KREMT-standarden")
 
-	dose_calc_sec: Optional[float] = field_with_meta(title='Dose calculation time [s]', description='Tid brukt på å beregne DVH')
-	geom_calc_sec: Optional[float] = field_with_meta(title='Geometric calculation time [s]', description='Tid brukt på å beregne de ulike geometriske parameterne')
-	outside_dose_volume: Optional[bool] = field_with_meta(title="Outside dose volume?", description="Sann dersom strukturen faller utenfor dosevolumet -- i så fall beregnes ikke dosen.")
-
 	roi_name: Optional[str] = field_with_meta(title='ROI name', description='Navn på struktur som angitt i TPS', dicom="(3006, 0026)")
 	roi_type: Optional[Literal[roi_types]] = field_with_meta(title='ROI type', description='Strukturtype. Kun et fåtall av disse typene lagres, da kontrollstrukturer o.l. er uinteressant for registeret', dicom="(3006, 00A4)", values=roi_types)
 	origin: Optional[str] = field_with_meta(title='Structure origin', description='Er strukturen inntegnet manuelt eller via AI-metoder? Kan hentes fra RT Struct tag, men må samle inn litt data før vi kan konkludere hva som kan brukes.')
@@ -212,7 +202,27 @@ class DVH(BaseModel):
 	min_dose: Optional[float] = field_with_meta(title='Voxelwise min dose [Gy]', description='Minste dose som beregnet fra struktursettet og RT dose', unit="Gy")
 	mean_dose: Optional[float] = field_with_meta(title='Voxelwise mean dose [Gy]', description='Gjennomsnittlig dose som beregnet fra struktursettet og RT dose', unit="Gy")
 	max_dose: Optional[float] = field_with_meta(title='Voxelwise max dose [Gy]', description='Største dose som beregnet fra struktursettet og RT dose', unit="Gy")
-
+	dvh_string: Optional[str] = field_with_meta(title='DVH string [compressed]', 
+		description=\
+		"""Hele DVH-strengen for strukturen, som beregnet fra struktursettet og RT dose. Teknisk: Lagret som en b64-kodet gzippet streng av bitpakkede uint16, hvor 10 000 angir 100 % volum, med statiske 0.1 Gy bins.
+		Ved datautlevering kan DVH-data eksporteres på ønsket format: CSV, Excel, JSON, PNG etc.
+		Se f.eks. det relaterte prosjektet `DVH Toolkit <https://github.com/BergenParticleTherapy/DVHToolkit>`_ for tips til hvordan data kan behandles og NTCP-modelleres.
+		Her følger et kodeeksempel i Python på hvordan dataene pakkes opp og ned fra en liste::
+		
+			def compress_bitpacking_b64_uint16(float_list):
+				int_list = [int(x*100+0.5) for x in float_list]
+				binary_data = struct.pack('>' + 'H' * len(int_list), *int_list)
+				compressed_data = gzip.compress(binary_data)
+				return base64.b64encode(compressed_data, pad=True).decode('ascii'))
+			
+			def decompress_bitpacking_b64_uint16(encoded_data):
+				compressed_data = base64.b64decode(encoded_data)
+				binary_data = gzip.decompress(compressed_data)
+				int_list = struct.unpack(f'>{len(binary_data) // 2}H', binary_data)
+				return [x/100 for x in int_list]
+				
+		""")
+	# roi_coord_string: Optional[str] = field_with_meta(title='ROI string [compressed]', description='Hele ROI-strengen for strukturen, sikkert noe komprimert. Ikke i bruk')
 	dist_to_ptv_min: Optional[float] = field_with_meta(title='Min distance to PTV [cm]', description='Minste avstand mellom konturene for aktuell struktur og (union) PTV', unit="cm")
 	dist_to_ptv_mean: Optional[float] = field_with_meta(title='Mean distance to PTV [cm]', description='Gjennomsnittlig avstand mellom konturene for aktuell struktur og (union) PTV', unit="cm")
 	dist_to_ptv_median: Optional[float] = field_with_meta(title='Median distance to PTV [cm]', description='Median avstand avstand mellom konturene for aktuell struktur og (union) PTV', unit="cm")
@@ -236,34 +246,33 @@ class DVH(BaseModel):
 	centroid_dist_to_iso_max: Optional[float] = field_with_meta(title='Centroid distance to isocenter max [cm]', description='Største avstand mellom sentroide for aktuell struktur og isosenter (over alle felt). Beregnet med ``shapely``', unit="cm")
 	integral_dose: Optional[float] = field_with_meta(title='Integral dose [cm3 Gy]', description='Integraldose til aktuell struktur, beregnet som gjennomsnittsdose * volum', unit="Gy cm3")
 	color: Optional[str] = field_with_meta(title='ROI color', description='Farge til ROI som angitt i TPS.', dicom="(3006,002A)", unit="hex (RR,GG,BB)")
-	d2: Optional[float] = field_with_meta(title='D2 [Gy]', description='Dose til 2% av aktuell struktur', unit="Gy")
-	d10: Optional[float] = field_with_meta(title='D10% [Gy]', description='Dose til 10% av aktuell struktur', unit="Gy")
-	d20: Optional[float] = field_with_meta(title='D20% [Gy]', description='Dose til 20% av aktuell struktur', unit="Gy")
-	d30: Optional[float] = field_with_meta(title='D30% [Gy]', description='Dose til 30% av aktuell struktur', unit="Gy")
-	d40: Optional[float] = field_with_meta(title='D40% [Gy]', description='Dose til 40% av aktuell struktur', unit="Gy")
-	d50: Optional[float] = field_with_meta(title='D50% [Gy]', description='Dose til 50% av aktuell struktur', unit="Gy")
-	d60: Optional[float] = field_with_meta(title='D60% [Gy]', description='Dose til 60% av aktuell struktur', unit="Gy")
-	d70: Optional[float] = field_with_meta(title='D70% [Gy]', description='Dose til 70% av aktuell struktur', unit="Gy")
-	d80: Optional[float] = field_with_meta(title='D80% [Gy]', description='Dose til 80% av aktuell struktur', unit="Gy")
-	d90: Optional[float] = field_with_meta(title='D90% [Gy]', description='Dose til 90% av aktuell struktur', unit="Gy")
-	d98: Optional[float] = field_with_meta(title='D98% [Gy]', description='Dose til 98% av aktuell struktur ', unit="Gy")
-	d2cc: Optional[float] = field_with_meta(title='D2cc [Gy]', description='Dose til 2cc av aktuell struktur', unit="Gy")
-	v5gy: Optional[float] = field_with_meta(title='V5Gy [%]', description='Volumet av aktuell struktur som mottar 5 Gy', unit="%")
-	v10gy: Optional[float] = field_with_meta(title='V10Gy [%]', description='Volumet av aktuell struktur som mottar 10 Gy', unit="%")
-	v15gy: Optional[float] = field_with_meta(title='V15Gy [%]', description='Volumet av aktuell struktur som mottar 15 Gy', unit="%")
-	v20gy: Optional[float] = field_with_meta(title='V20Gy [%]', description='Volumet av aktuell struktur som mottar 20 Gy', unit="%")
-	v25gy: Optional[float] = field_with_meta(title='V25Gy [%]', description='Volumet av aktuell struktur som mottar 25 Gy', unit="%")
-	v30gy: Optional[float] = field_with_meta(title='V30Gy [%]', description='Volumet av aktuell struktur som mottar 30 Gy', unit="%")
-	v35gy: Optional[float] = field_with_meta(title='V35Gy [%]', description='Volumet av aktuell struktur som mottar 35 Gy', unit="%")
-	v40gy: Optional[float] = field_with_meta(title='V40Gy [%]', description='Volumet av aktuell struktur som mottar 40 Gy', unit="%")
-	v45gy: Optional[float] = field_with_meta(title='V45Gy [%]', description='Volumet av aktuell struktur som mottar 45 Gy', unit="%")
-	v50gy: Optional[float] = field_with_meta(title='V50Gy [%]', description='Volumet av aktuell struktur som mottar 50 Gy', unit="%")
-	v55gy: Optional[float] = field_with_meta(title='V55Gy [%]', description='Volumet av aktuell struktur som mottar 55 Gy', unit="%")
-	v60gy: Optional[float] = field_with_meta(title='V60Gy [%]', description='Volumet av aktuell struktur som mottar 60 Gy', unit="%")
-	v65gy: Optional[float] = field_with_meta(title='V65Gy [%]', description='Volumet av aktuell struktur som mottar 65 Gy', unit="%")
-	v70gy: Optional[float] = field_with_meta(title='V70Gy [%]', description='Volumet av aktuell struktur som mottar 70 Gy', unit="%")
-	v95: Optional[float] = field_with_meta(title='V95% [%]', description='Volumet av aktuell struktur som mottar 95% av planlagt dose til målvolum', unit="%")
-	struct_delivered_source: Optional[Literal["NPR", "RTRECORD", ""]] = field_with_meta(title='Source for "delivered dose"', description='Hvilken datakilde er brukt for å beregne levert dose?', values=["NPR", "RTRECORD", None])
+	D2: Optional[float] = field_with_meta(title='D2 [Gy]', description='Dose til 2% av aktuell struktur', unit="Gy")
+	D10: Optional[float] = field_with_meta(title='D10% [Gy]', description='Dose til 10% av aktuell struktur', unit="Gy")
+	D20: Optional[float] = field_with_meta(title='D20% [Gy]', description='Dose til 20% av aktuell struktur', unit="Gy")
+	D30: Optional[float] = field_with_meta(title='D30% [Gy]', description='Dose til 30% av aktuell struktur', unit="Gy")
+	D40: Optional[float] = field_with_meta(title='D40% [Gy]', description='Dose til 40% av aktuell struktur', unit="Gy")
+	D50: Optional[float] = field_with_meta(title='D50% [Gy]', description='Dose til 50% av aktuell struktur', unit="Gy")
+	D60: Optional[float] = field_with_meta(title='D60% [Gy]', description='Dose til 60% av aktuell struktur', unit="Gy")
+	D70: Optional[float] = field_with_meta(title='D70% [Gy]', description='Dose til 70% av aktuell struktur', unit="Gy")
+	D80: Optional[float] = field_with_meta(title='D80% [Gy]', description='Dose til 80% av aktuell struktur', unit="Gy")
+	D90: Optional[float] = field_with_meta(title='D90% [Gy]', description='Dose til 90% av aktuell struktur', unit="Gy")
+	D98: Optional[float] = field_with_meta(title='D98% [Gy]', description='Dose til 98% av aktuell struktur ', unit="Gy")
+	D2cc: Optional[float] = field_with_meta(title='D2cc [Gy]', description='Dose til 2cc av aktuell struktur', unit="Gy")
+	V5Gy: Optional[float] = field_with_meta(title='V5Gy [%]', description='Volumet av aktuell struktur som mottar 5 Gy', unit="%")
+	V10Gy: Optional[float] = field_with_meta(title='V10Gy [%]', description='Volumet av aktuell struktur som mottar 10 Gy', unit="%")
+	V15Gy: Optional[float] = field_with_meta(title='V15Gy [%]', description='Volumet av aktuell struktur som mottar 15 Gy', unit="%")
+	V20Gy: Optional[float] = field_with_meta(title='V20Gy [%]', description='Volumet av aktuell struktur som mottar 20 Gy', unit="%")
+	V25Gy: Optional[float] = field_with_meta(title='V25Gy [%]', description='Volumet av aktuell struktur som mottar 25 Gy', unit="%")
+	V30Gy: Optional[float] = field_with_meta(title='V30Gy [%]', description='Volumet av aktuell struktur som mottar 30 Gy', unit="%")
+	V35Gy: Optional[float] = field_with_meta(title='V35Gy [%]', description='Volumet av aktuell struktur som mottar 35 Gy', unit="%")
+	V40Gy: Optional[float] = field_with_meta(title='V40Gy [%]', description='Volumet av aktuell struktur som mottar 40 Gy', unit="%")
+	V45Gy: Optional[float] = field_with_meta(title='V45Gy [%]', description='Volumet av aktuell struktur som mottar 45 Gy', unit="%")
+	V50Gy: Optional[float] = field_with_meta(title='V50Gy [%]', description='Volumet av aktuell struktur som mottar 50 Gy', unit="%")
+	V55Gy: Optional[float] = field_with_meta(title='V55Gy [%]', description='Volumet av aktuell struktur som mottar 55 Gy', unit="%")
+	V60Gy: Optional[float] = field_with_meta(title='V60Gy [%]', description='Volumet av aktuell struktur som mottar 60 Gy', unit="%")
+	V65Gy: Optional[float] = field_with_meta(title='V65Gy [%]', description='Volumet av aktuell struktur som mottar 65 Gy', unit="%")
+	V70Gy: Optional[float] = field_with_meta(title='V70Gy [%]', description='Volumet av aktuell struktur som mottar 70 Gy', unit="%")
+	V95: Optional[float] = field_with_meta(title='V95% [%]', description='Volumet av aktuell struktur som mottar 95% av planlagt dose til målvolum', unit="%")
 
 class DR(BaseModel):
 	"""Oversikt over normeringsvolum:
@@ -273,13 +282,12 @@ class DR(BaseModel):
 	
 	"""
 
-	redcap_repeat_instance: str = Field('new', transfer_only=True)
-	redcap_repeat_instrument: str = Field('dose_reference', transfer_only=True)
+	# redcap_repeat_instance: str = 'new'
+	# redcap_repeat_instrument: str = "dosereference"
 
-	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)', document_only=True)
-	dr_course_id: Optional[str] = field_with_meta(title='FK Dose Reference - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
+	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
+	dr_course_id: Optional[str] = field_with_meta(title='FK Dose Reference - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
 	dr_plan_uid: Optional[str] = field_with_meta(title='FK Dose Reference - Plan UID', description='Koblingsnøkkel mot DICOM-datasett på Plan UID-nivå')
-	dr_dose_uid: Optional[str] = field_with_meta(title="RT DOse SOP Instance UID", description="Kobling mot Dosematrisen beregningen er gjort med")
 
 	ref_dr_name: Optional[str] = field_with_meta(title='Referenced Dose Reference name', description='Navn på normeringsvolum, fra Description taggen', dicom="(300A,0016)")
 	dr_type: Optional[Literal["POINT", "VOLUME", "COORDINATES", "SITE"]] = \
@@ -296,11 +304,11 @@ class Beam(BaseModel):
 	   =============================
 	
 	"""
-	redcap_repeat_instance: str = Field('new', transfer_only=True)
-	redcap_repeat_instrument: str = Field('beam', transfer_only=True)
+	# redcap_repeat_instance: str = 'new'
+	# redcap_repeat_instrument: str = "beam"
 
-	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)', document_only=True)
-	beam_course_id: Optional[str] = field_with_meta(title='FK Beam - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå', hidden=True)
+	record_id: Optional[str] = field_with_meta(title='Koblingsnøkkel i NORPREG', description='Angis automatisk for hver pasient. Foreslått format er 7-karakter heksadesimal (f.eks. a72bf40)')
+	beam_course_id: Optional[str] = field_with_meta(title='FK Beam - Course ID', description='Koblingsnøkkel mot Course ID på OIS-nivå')
 	beam_plan_uid: Optional[str] = field_with_meta(title='FK Beam - Plan UID', description='Koblingsnøkkel mot DICOM-datasett på Plan UID-nivå')
 
 	beam_tx_modality: Optional[str] = field_with_meta(title='Treatment modality', 

@@ -44,7 +44,7 @@ class Patient(BaseModel):
 
     addresses: List['Address'] = field_with_meta(title="Adresser", description="Pasientens tilhørende adresser", default_factory=list)
     courses: List['Course'] = field_with_meta(title="Behandlingsforløp", description="Pasientens tilhørende behandlingsforløp. Knyttet til Course ID i OIS og sak i DIPS.", default_factory=list)
-    id_history: List["IDNumberHistory"] = field_with_meta(title="ID-historikk", description="Pasientens ID-historikk", default_factory=list)
+    id_history: List["PatientIdentifierHistory"] = field_with_meta(title="ID-historikk", description="Pasientens ID-historikk", default_factory=list)
 
     id_number_aes: str = field_with_meta(title="Pasientidentifikasjon", description="Kan være av ulik `id_type`", encrypted=True)
     id_type: Literal["FNR", "DNR", "FHNR", "HNR"] = field_with_meta(title="Type av pasientidentifikasjon.", description="Kan være av ulik `id_type`")
@@ -52,9 +52,8 @@ class Patient(BaseModel):
     birth_date_aes: str = field_with_meta(title="Pasientens fødselsdato", description="", encrypted=True, unit="YYYY-MM-DD")
     ois_patient_id_aes: str = field_with_meta(title="OIS pasient ID", description="PasientID i stråleterapisystem (f.eks. PatientSer i Aria)", encrypted=True)
     epj_patient_id_aes: str = field_with_meta(title="EPJ pasient ID", description="PasientID i journalsystem", encrypted=True)
-    npr_patient_id_aes: str = field_with_meta(title="NPR pasient ID", description="PasientID i NPR", encrypted=True)
 
-class IDNumberHistory(BaseModel):
+class PatientIdentifierHistory(BaseModel):
     """ID-historikk
        ============
 
@@ -99,6 +98,7 @@ class Course(BaseModel):
     ois_course_id_aes: str = field_with_meta(title="OIS course ID", description="Koblingsnøkkel for behandlingsforløp / course i stråleterapisystem", encrypted=True)
     epj_course_id_aes: str = field_with_meta(title="EPJ course ID", description="Koblingsnøkkel for behandlingsforløp / sak i journalsystem", encrypted=True)
 
+
 class DataStatus(BaseModel):
     """ Datastatus
         ==========
@@ -107,9 +107,9 @@ class DataStatus(BaseModel):
     id: int = field_with_meta(title="Radindeks for datastatus", description="Dannes automatisk ved opprettelse av ny statusmelding")
     fk_course_id: int = field_with_meta(title="FK course ID", description="Koblingsnøkkel for behandlingsforløp")
     course: Optional[Course] = field_with_meta(title="Tilknyttet behandlingsserie", description="Course-objekt som hører til denne datastatusen", default=None)
-    epj_status: int = field_with_meta(title="EPJ status", description="Statuskode for dataoverføring EPJ. Har behov for en god datamodell eller støttetabell her, f.eks. for å logge hver hendelse med statusmeldinger")
-    dicom_status: int = field_with_meta(title="DICOM status", description="Statuskode for dataoverføring DICOM. Har behov for en god datamodell eller støttetabell her, f.eks. for å logge hver hendelse med statusmeldinger")
-    prom_status: int = field_with_meta(title="PROMs status", description="Statuskode for pasientrapporterte data. Har behov for en god datamodell eller støttetabell her, f.eks. for å logge hver hendelse med statusmeldinger")
+    epj_status_aes: int = field_with_meta(title="EPJ status", description="Statuskode for dataoverføring EPJ. Har behov for en god datamodell eller støttetabell her, f.eks. for å logge hver hendelse med statusmeldinger", encrypted=True)
+    dicom_status_aes: int = field_with_meta(title="DICOM status", description="Statuskode for dataoverføring DICOM. Har behov for en god datamodell eller støttetabell her, f.eks. for å logge hver hendelse med statusmeldinger", encrypted=True)
+    prom_status_aes: int = field_with_meta(title="PROMs status", description="Statuskode for pasientrapporterte data. Har behov for en god datamodell eller støttetabell her, f.eks. for å logge hver hendelse med statusmeldinger", encrypted=True)
 
 class MapStudyUID(BaseModel):
     """ Kobling av Study UID
